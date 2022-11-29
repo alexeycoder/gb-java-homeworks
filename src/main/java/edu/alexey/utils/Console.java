@@ -12,9 +12,13 @@ public class Console {
 			ForeColors foreColor, BackColors backColor) {
 	}
 
-	// consts
+	public record Border(
+			String horiz, String vert,
+			String topLeft, String topRight,
+			String btmLeft, String btmRight) {
+	}
 
-	private static final String TITLE_BORDER_SYMBOL = "\u2550";
+	// consts
 
 	private static final String PLEASE_REPEAT = "Пожалуйста попробуйте снова.";
 	private static final String ERR_NOT_INT = "Некорректный ввод: Требуется целое число. " + PLEASE_REPEAT;
@@ -28,6 +32,8 @@ public class Console {
 			+ "\n    import ctypes"
 			+ "\n    kernel32 = ctypes.windll.kernel32"
 			+ "\n    kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)");
+
+	private static final Border TITLE_BORDER = new Border("\u2550", "\u2551", "\u2554", "\u2557", "\u255a", "\u255d");
 
 	// methods & related fields
 
@@ -105,9 +111,17 @@ public class Console {
 	public static void printTitle(String title, ForeColors foreColor) {
 		var lines = title.split("\n");
 		int maxLen = Arrays.stream(lines).mapToInt(String::length).max().getAsInt();
+		int horizPadding = 1;
 		var style = new TextStyle(true, null, null, foreColor, null);
-		var border = TITLE_BORDER_SYMBOL.repeat(maxLen);
-		printfStyled(style, "%s\n%s\n%s\n", border, title, border);
+		StringBuilder sb = new StringBuilder();
+		var horizLine = TITLE_BORDER.horiz.repeat(maxLen + horizPadding * 2);
+		sb.append(TITLE_BORDER.topLeft).append(horizLine).append(TITLE_BORDER.topRight);
+		for (var line : lines) {
+			line = StringUtils.padCenter(line, " ", maxLen);
+			sb.append("\n").append(TITLE_BORDER.vert).append(" ").append(line).append(" ").append(TITLE_BORDER.vert);
+		}
+		sb.append("\n").append(TITLE_BORDER.btmLeft).append(horizLine).append(TITLE_BORDER.btmRight);
+		printlnStyled(style, sb.toString());
 	}
 
 	public static void printlnStyled(TextStyle style, String text) {

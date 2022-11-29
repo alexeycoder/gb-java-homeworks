@@ -22,5 +22,7 @@ public class Main {
 		Console.activateAnsiEscSeqWinCmd(true);
 		TaskMergeSort.execute();
 
+		
+
 	}
 }

@@ -8,6 +8,6 @@ import edu.alexey.utils.ForeColors;
  */
 public class TaskMergeSort {
 	public static void execute() {
-		Console.printTitle("Сортировка слиянием", ForeColors.BRIGHT_CYAN);
+		Console.printTitle("Сортировка\nслиянием", ForeColors.BRIGHT_CYAN);
 	}
 }
