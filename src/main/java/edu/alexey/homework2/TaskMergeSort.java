@@ -1,5 +1,6 @@
 package edu.alexey.homework2;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 import edu.alexey.utils.BackColors;
@@ -18,12 +19,25 @@ public class TaskMergeSort {
 	private static final TextStyle OUTPUT_STYLE = new TextStyle(true, false, false, ForeColors.YELLOW,
 			BackColors.UNSPECIFIED);
 
+	private static <T extends Comparable<T>> void printBeforeAndAfter(T[] array) {
+		System.out.println("\nСгенерированный массив:\n");
+		Console.printArray(OUTPUT_STYLE, array);
+
+		ArrayUtils.mergeSort(array);
+
+		System.out.println("\nРезультат сортировки:\n");
+		Console.printArray(OUTPUT_STYLE, array);
+	}
+
 	public static void execute() {
 
-		Console.clearScreen();
-		Console.printTitle("Сортировка слиянием \u2014 демонтрация работы алгоритма", ForeColors.BRIGHT_CYAN);
+		Locale.setDefault(Locale.forLanguageTag("ru_RU"));
 		Scanner scanner = new Scanner(System.in);
+
 		do {
+			Console.clearScreen();
+			Console.printTitle("Сортировка слиянием \u2014 демонтрация работы алгоритма", ForeColors.BRIGHT_CYAN);
+
 			System.out.println("\nГенерация исходного массива\n");
 			System.out.println("Выберите тип исходного массива:");
 			int choice = Console.getUserInputInt(scanner,
@@ -52,13 +66,7 @@ public class TaskMergeSort {
 
 				Integer[] array = ArrayUtils.populateRandomInteger(new Integer[size], min, max);
 
-				System.out.println("\nСгенерированный массив:\n");
-				Console.printArray(OUTPUT_STYLE, array);
-
-				System.out.println("\nРезультат сортировки:\n");
-				ArrayUtils.mergeSort(array);
-
-				Console.printArray(OUTPUT_STYLE, array);
+				printBeforeAndAfter(array);
 
 			} else {
 				int min = 0;
@@ -72,18 +80,11 @@ public class TaskMergeSort {
 					max = Console.getUserInputIntRange(scanner,
 							"Введите максимальную длину слова: ",
 							min, null, INPUT_STYLE);
-
-					String[] array = ArrayUtils.populateRandomWords(new String[size], min, max);
-
-					System.out.println("\nСгенерированный массив:\n");
-					Console.printArray(OUTPUT_STYLE, array);
-
-					System.out.println("\nРезультат сортировки:\n");
-					ArrayUtils.mergeSort(array);
-
-					Console.printArray(OUTPUT_STYLE, array);
 				}
 
+				String[] array = ArrayUtils.populateRandomWords(new String[size], min, max);
+
+				printBeforeAndAfter(array);
 			}
 
 		} while (Console.askYesNo(scanner, "\nЖелаете повторить (Y/n)? ", true));

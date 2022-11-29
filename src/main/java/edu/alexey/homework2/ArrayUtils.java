@@ -96,7 +96,7 @@ public class ArrayUtils {
 	// private static final char[] alphabet = ("abcdefghijklmnopqrstuvwxyz"
 	// + "ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
 
-	private static final char[] alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя".toCharArray();
+	private static final char[] alphabet = "абвгдежзийклмнопрстуфхцчшщъыьэюя".toCharArray();
 
 	public static String getRandomWord(Random rnd, int minLength, int maxLength) {
 		if (minLength > maxLength) {
