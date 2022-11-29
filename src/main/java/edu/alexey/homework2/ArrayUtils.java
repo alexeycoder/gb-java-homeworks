@@ -5,43 +5,66 @@ import java.util.Random;
 
 public class ArrayUtils {
 
+	// types
+
+	private record ArraysPair<T>(T[] left, T[] right) {
+	}
+
+	// methods
+
 	public static <T extends Comparable<T>> T[] mergeSort(T[] array) {
 		int len = array.length;
 		if (len <= 1) {
 			return array;
 		}
 
+		var pair = splitArray(array);
+
+		var leftSorted = mergeSort(pair.left);
+		var rightSorted = mergeSort(pair.right);
+
+		mergeArrays(array, leftSorted, rightSorted);
+
+		return array;
+	}
+
+	private static <T> ArraysPair<T> splitArray(T[] array) {
+		int len = array.length;
+		assert len > 1;
 		int rightStartIndex = len / 2;
 		var left = Arrays.copyOfRange(array, 0, rightStartIndex);
 		var right = Arrays.copyOfRange(array, rightStartIndex, len);
-		var leftSorted = mergeSort(left);
-		var rightSorted = mergeSort(right);
+
+		return new ArraysPair<T>(left, right);
+	}
+
+	private static <T extends Comparable<T>> void mergeArrays(T[] targetArray, T[] left, T[] right) {
+		assert targetArray != null && left != null && right != null && targetArray.length == left.length + right.length;
+
 		int leftIndex = 0;
 		int rightIndex = 0;
 		int i = 0;
 		// сливаем по одному элементу, пока какой-нибудь из массивов не закончится:
-		while (leftIndex < leftSorted.length && rightIndex < rightSorted.length) {
-			var leftVal = leftSorted[leftIndex];
-			var rightVal = rightSorted[rightIndex];
+		while (leftIndex < left.length && rightIndex < right.length) {
+			var leftVal = left[leftIndex];
+			var rightVal = right[rightIndex];
 			if (leftVal == null || leftVal.compareTo(rightVal) < 0) {
-				array[i] = leftVal;
+				targetArray[i] = leftVal;
 				++leftIndex;
 			} else {
-				array[i] = rightVal;
+				targetArray[i] = rightVal;
 				++rightIndex;
 			}
 			++i;
 		}
 		// добавляем в конец оставшийся хвостик одного из массивов,
 		// если таковой имеется:
-		for (; leftIndex < leftSorted.length; ++leftIndex, ++i) {
-			array[i] = leftSorted[leftIndex];
+		for (; leftIndex < left.length; ++leftIndex, ++i) {
+			targetArray[i] = left[leftIndex];
 		}
-		for (; rightIndex < rightSorted.length; ++rightIndex, ++i) {
-			array[i] = rightSorted[rightIndex];
+		for (; rightIndex < right.length; ++rightIndex, ++i) {
+			targetArray[i] = right[rightIndex];
 		}
-
-		return array;
 	}
 
 	public static Integer[] populateRandomInteger(Integer[] targetArray, int min, int max) {
