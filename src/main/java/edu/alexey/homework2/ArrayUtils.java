@@ -3,13 +3,9 @@ package edu.alexey.homework2;
 import java.util.Arrays;
 import java.util.Random;
 
+import edu.alexey.utils.Pair;
+
 public class ArrayUtils {
-
-	// types
-
-	private record ArraysPair<T>(T[] left, T[] right) {
-	}
-
 	// methods
 
 	public static <T extends Comparable<T>> T[] mergeSort(T[] array) {
@@ -20,22 +16,21 @@ public class ArrayUtils {
 
 		var pair = splitArray(array);
 
-		var leftSorted = mergeSort(pair.left);
-		var rightSorted = mergeSort(pair.right);
+		var leftSorted = mergeSort(pair.left());
+		var rightSorted = mergeSort(pair.right());
 
 		mergeArrays(array, leftSorted, rightSorted);
 
 		return array;
 	}
 
-	private static <T> ArraysPair<T> splitArray(T[] array) {
+	private static <T> Pair<T[]> splitArray(T[] array) {
 		int len = array.length;
 		assert len > 1;
 		int rightStartIndex = len / 2;
 		var left = Arrays.copyOfRange(array, 0, rightStartIndex);
 		var right = Arrays.copyOfRange(array, rightStartIndex, len);
-
-		return new ArraysPair<T>(left, right);
+		return new Pair<T[]>(left, right);
 	}
 
 	private static <T extends Comparable<T>> void mergeArrays(T[] targetArray, T[] left, T[] right) {

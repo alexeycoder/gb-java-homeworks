@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 import edu.alexey.utils.BackColors;
 import edu.alexey.utils.Console;
-import edu.alexey.utils.ForeColors;
 import edu.alexey.utils.Console.TextStyle;
+import edu.alexey.utils.ForeColors;
 
 /**
- * Решение задачи с алгоритмом сортировки слиянием.
+ * Демо для задачи 1 - алгоритм сортировки слиянием.
  */
 public class TaskMergeSort {
 	private static final int MAX_QTY = 9999;
@@ -37,6 +37,7 @@ public class TaskMergeSort {
 		do {
 			Console.clearScreen();
 			Console.printTitle("Сортировка слиянием \u2014 демонтрация работы алгоритма", ForeColors.BRIGHT_CYAN);
+			System.out.println("(Программу можно завершить в любой момент, введя q в ответ на любой запрос)");
 
 			System.out.println("\nГенерация исходного массива\n");
 			System.out.println("Выберите тип исходного массива:");
