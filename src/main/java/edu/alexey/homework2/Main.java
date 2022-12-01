@@ -1,26 +1,36 @@
 package edu.alexey.homework2;
 
-import java.util.Arrays;
+import java.util.Locale;
+import java.util.Scanner;
 
 import edu.alexey.utils.Console;
-import edu.alexey.utils.EscapeCode;
+import edu.alexey.utils.ForeColors;
 
 public class Main {
 	public static void main(String[] args) {
-		Integer[] intArr = ArrayUtils.populateRandomInteger(new Integer[11], -100, 100);
-		String[] strArr = ArrayUtils.populateRandomWords(new String[10], 3, 10);
+		Locale.setDefault(Locale.forLanguageTag("ru_RU"));
+		Scanner scanner = new Scanner(System.in);
 
-		System.out.println(Arrays.toString(strArr));
+		do {
+			Console.clearScreen();
+			Console.activateAnsiEscSeqWinCmd(true);
+			Console.printTitle("Решения задач", ForeColors.BRIGHT_CYAN);
 
-		// Arrays.stream(intArr).boxed().toArray(Integer[]::new)
-		ArrayUtils.mergeSort(strArr);
-		System.out.println("Sorted = ");
-		System.out.println(Arrays.toString(strArr));
+			System.out.println("Выберите задачу для демонстрации:");
+			int choice = Console.getUserInputInt(scanner,
+					"1 \u2014 Сортировка слиянием,\n2 \u2014 Наибольшие общие подпоследовательности: ",
+					val -> val == 1 || val == 2,
+					"Некорректный ввод: Требуется 1 или 2. " + Console.PLEASE_REPEAT, null);
+			System.out.println();
 
-		System.out.println(EscapeCode.CLEAR.getCode());
+			if (choice == 1) {
+				TaskMergeSort.execute(scanner);
+			} else {
+				TaskSubsequences.execute(scanner);
+			}
 
-		Console.activateAnsiEscSeqWinCmd(true);
-		TaskMergeSort.execute();
+		} while (Console.askYesNo(scanner, "\nПовторить (Y) или завершить (n)? ", true));
 
+		scanner.close();
 	}
 }

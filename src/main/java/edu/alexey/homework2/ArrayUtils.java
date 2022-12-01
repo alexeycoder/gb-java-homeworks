@@ -3,7 +3,10 @@ package edu.alexey.homework2;
 import java.util.Arrays;
 import java.util.Random;
 
+import edu.alexey.utils.Pair;
+
 public class ArrayUtils {
+	// methods
 
 	public static <T extends Comparable<T>> T[] mergeSort(T[] array) {
 		int len = array.length;
@@ -11,37 +14,52 @@ public class ArrayUtils {
 			return array;
 		}
 
+		var pair = splitArray(array);
+
+		var leftSorted = mergeSort(pair.left());
+		var rightSorted = mergeSort(pair.right());
+
+		mergeArrays(array, leftSorted, rightSorted);
+
+		return array;
+	}
+
+	private static <T> Pair<T[]> splitArray(T[] array) {
+		int len = array.length;
+		assert len > 1;
 		int rightStartIndex = len / 2;
 		var left = Arrays.copyOfRange(array, 0, rightStartIndex);
 		var right = Arrays.copyOfRange(array, rightStartIndex, len);
-		var leftSorted = mergeSort(left);
-		var rightSorted = mergeSort(right);
+		return new Pair<T[]>(left, right);
+	}
+
+	private static <T extends Comparable<T>> void mergeArrays(T[] targetArray, T[] left, T[] right) {
+		assert targetArray != null && left != null && right != null && targetArray.length == left.length + right.length;
+
 		int leftIndex = 0;
 		int rightIndex = 0;
 		int i = 0;
 		// сливаем по одному элементу, пока какой-нибудь из массивов не закончится:
-		while (leftIndex < leftSorted.length && rightIndex < rightSorted.length) {
-			var leftVal = leftSorted[leftIndex];
-			var rightVal = rightSorted[rightIndex];
+		while (leftIndex < left.length && rightIndex < right.length) {
+			var leftVal = left[leftIndex];
+			var rightVal = right[rightIndex];
 			if (leftVal == null || leftVal.compareTo(rightVal) < 0) {
-				array[i] = leftVal;
+				targetArray[i] = leftVal;
 				++leftIndex;
 			} else {
-				array[i] = rightVal;
+				targetArray[i] = rightVal;
 				++rightIndex;
 			}
 			++i;
 		}
 		// добавляем в конец оставшийся хвостик одного из массивов,
 		// если таковой имеется:
-		for (; leftIndex < leftSorted.length; ++leftIndex, ++i) {
-			array[i] = leftSorted[leftIndex];
+		for (; leftIndex < left.length; ++leftIndex, ++i) {
+			targetArray[i] = left[leftIndex];
 		}
-		for (; rightIndex < rightSorted.length; ++rightIndex, ++i) {
-			array[i] = rightSorted[rightIndex];
+		for (; rightIndex < right.length; ++rightIndex, ++i) {
+			targetArray[i] = right[rightIndex];
 		}
-
-		return array;
 	}
 
 	public static Integer[] populateRandomInteger(Integer[] targetArray, int min, int max) {
@@ -73,7 +91,7 @@ public class ArrayUtils {
 	// private static final char[] alphabet = ("abcdefghijklmnopqrstuvwxyz"
 	// + "ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
 
-	private static final char[] alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя".toCharArray();
+	private static final char[] alphabet = "абвгдежзийклмнопрстуфхцчшщъыьэюя".toCharArray();
 
 	public static String getRandomWord(Random rnd, int minLength, int maxLength) {
 		if (minLength > maxLength) {
