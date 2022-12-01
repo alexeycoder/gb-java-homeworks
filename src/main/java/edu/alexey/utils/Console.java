@@ -164,6 +164,25 @@ public class Console {
 		return (min != null && value < min) || (max != null && value > max);
 	}
 
+	public static String[] getUserInputStringArray(Scanner inputScanner, String prompt, boolean suppressExitRequest,
+			TextStyle inputStyle) {
+		boolean customStyle = inputStyle != null;
+		System.out.print(prompt);
+		if (customStyle) {
+			System.out.print(styleText(inputStyle, false, ""));
+		}
+		var rawInp = inputScanner.nextLine();
+		if (customStyle) {
+			resetStyle();
+		}
+		if (!suppressExitRequest) {
+			if (rawInp.equalsIgnoreCase(EXIT_APP_CMD)) {
+				forceExit();
+			}
+		}
+		return rawInp.trim().split("\\s+");
+	}
+
 	public static boolean askYesNo(Scanner inputScanner, String prompt, boolean isYesDefault) {
 		System.out.print(prompt);
 		var answer = inputScanner.nextLine();

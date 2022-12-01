@@ -1,6 +1,5 @@
 package edu.alexey.homework2;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 import edu.alexey.utils.BackColors;
@@ -29,11 +28,7 @@ public class TaskMergeSort {
 		Console.printArray(OUTPUT_STYLE, array);
 	}
 
-	public static void execute() {
-
-		Locale.setDefault(Locale.forLanguageTag("ru_RU"));
-		Scanner scanner = new Scanner(System.in);
-
+	public static void execute(Scanner scanner) {
 		do {
 			Console.clearScreen();
 			Console.printTitle("Сортировка слиянием \u2014 демонтрация работы алгоритма", ForeColors.BRIGHT_CYAN);
@@ -42,15 +37,15 @@ public class TaskMergeSort {
 			System.out.println("\nГенерация исходного массива\n");
 			System.out.println("Выберите тип исходного массива:");
 			int choice = Console.getUserInputInt(scanner,
-					"0 \u2014 числовой, 1 - строковый: ",
-					val -> val == 0 || val == 1,
-					"Некорректный ввод: Требуется 0 или 1. " + Console.PLEASE_REPEAT, INPUT_STYLE);
+					"1 \u2014 числовой, 2 \u2014 строковый: ",
+					val -> val == 1 || val == 2,
+					"Некорректный ввод: Требуется 1 или 2. " + Console.PLEASE_REPEAT, INPUT_STYLE);
 			System.out.println();
 
 			int size = Console.getUserInputIntRange(scanner, "Задайте количество элементов массива: ",
 					0, MAX_QTY, INPUT_STYLE);
 
-			if (choice == 0) {
+			if (choice == 1) {
 
 				int min = 0;
 				int max = 0;
@@ -89,7 +84,5 @@ public class TaskMergeSort {
 			}
 
 		} while (Console.askYesNo(scanner, "\nЖелаете повторить (Y/n)? ", true));
-
-		scanner.close();
 	}
 }

@@ -1,109 +1,89 @@
 package edu.alexey.homework2;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
-import edu.alexey.homework2.ListUtils.FastSubsequensesGenerator;
+import edu.alexey.utils.BackColors;
+import edu.alexey.utils.Console;
+import edu.alexey.utils.Console.TextStyle;
+import edu.alexey.utils.ForeColors;
 
 /**
- * Демо для задачи 2 - поиск длины наибольшей общей подпоследовательности двух
- * последовательностей
+ * Демо для задачи 2 - поиск (длины) наибольшей общей подпоследовательности(ей)
+ * двух
+ * последовательностей.
+ * 
+ * (варианты тестовых последовательностей:
+ * a b c a b c a a / a c b a c b a
+ * a b g c j d e k f / 1 5 6 a b c d f k 5 3 1 4 )
+ * a b c d e f g h i j k l m n o p q r s t u v w x y z /
+ * l o r e m i p s u m d o l o r s i t a m e t c o n s e c t e t u e r
  */
 public class TaskSubsequences {
+	private static final TextStyle INPUT_STYLE_1 = new TextStyle(true, false, false, ForeColors.BRIGHT_GREEN,
+			BackColors.UNSPECIFIED);
+	private static final TextStyle INPUT_STYLE_2 = new TextStyle(true, false, false, ForeColors.BRIGHT_BLUE,
+			BackColors.UNSPECIFIED);
 
-	private static void generateIndices(int length, int subLength) {
-		int[] indices = new int[subLength];
-		for (int i = 0; i < subLength; ++i) {
-			indices[i] = i;
+	private static final TextStyle OUTPUT_STYLE = new TextStyle(true, false, false, ForeColors.YELLOW,
+			BackColors.UNSPECIFIED);
+
+	private static <T> void printResult(List<List<T>> lcsList, Duration elapsed) {
+
+		int len = 0;
+		if (lcsList.size() == 0 || (len = lcsList.get(0).size()) == 0) {
+			Console.printlnStyled(OUTPUT_STYLE, "Не найдено ни одной общей подпоследовательности (кроме пустой).");
+			return;
 		}
-		System.out.println(Arrays.toString(indices));
 
-		int pos = subLength - 1;
-		while (moveNext(indices, length, subLength)) {
-			System.out.println(Arrays.toString(indices));
+		if (len == 1) {
+			Console.printfStyled(OUTPUT_STYLE,
+					"Найдено %d общих подпоследовательностей единичной длины (не выводятся).", lcsList.size());
+			return;
 		}
 
+		System.out.printf("Длина наибольшей общей подпоследовательности: ");
+		Console.printlnStyled(OUTPUT_STYLE, Integer.toString(len));
+
+		System.out.printf("\nНаибольшие общие подпоследовательности (%d шт.):\n", lcsList.size());
+		for (List<T> lcs : lcsList) {
+			Console.printlnStyled(OUTPUT_STYLE, lcs.toString());
+		}
+
+		System.out.printf("\nЗатрачено времени: %d мс\n", elapsed.toMillis());
 	}
 
-	private static boolean moveNext(int[] indices, int length, int subLength) {
-		if (indices.length <= 0)
-			return false;
+	public static void execute(Scanner scanner) {
+		do {
+			Console.clearScreen();
+			Console.printTitle("Поиск наибольших общих подпоследовательностей двух последовательностей",
+					ForeColors.BRIGHT_CYAN);
+			System.out.println("(Программу можно завершить в любой момент, введя q в ответ на любой запрос)");
 
-		while (indices[0] < length - subLength) {
+			String[] firstSequence = Console.getUserInputStringArray(
+					scanner,
+					"\nВведите первую последовательность символов или слов, разделённых пробелом:\n\n",
+					false, INPUT_STYLE_1);
 
-			int pos = subLength - 1;
-			int posMaxIndex = length - 1; // length - subLength + pos;
-			if (indices[pos] < posMaxIndex) {
-				++indices[pos];
-				return true;
-			}
+			String[] secondSequence = Console.getUserInputStringArray(
+					scanner,
+					"\nВведите вторую последовательность символов или слов, разделённых пробелом:\n\n",
+					false, INPUT_STYLE_2);
+			System.out.println();
 
-			do {
-				--pos;
-				--posMaxIndex;
-			} while (pos >= 0 && indices[pos] >= posMaxIndex);
+			Instant start = Instant.now();
 
-			if (pos >= 0) {
-				int i = ++indices[pos];
-				while (++pos < subLength) {
-					indices[pos] = ++i;
-				}
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return false;
-	}
+			var longestCommonSubsequences = ListUtils.findLongestCommonSubsequences(
+					Arrays.asList(firstSequence),
+					Arrays.asList(secondSequence));
 
-	public static void main(String[] args) {
-		// String[] seqFirst = "abcdefghklmabcdbadc".split("");
-		// String[] seqSecond = "afbegfgfgbmfgbcbfgc".split("");
+			Duration elapsed = Duration.between(start, Instant.now());
 
-		String[] seqFirst = "abcabcaa".split("");
-		String[] seqSecond = "acbacba".split("");
+			printResult(longestCommonSubsequences, elapsed);
 
-		// String[] seqFirst = "abgcjdekf".split("");
-		// String[] seqSecond = "156abcdfk5314".split("");
-
-		// String[] seqFirst = "fdghftdhdfg".split("");
-		// String[] seqSecond = "".split("");
-
-		// System.out.println(Arrays.toString(seqFirst));
-		// System.out.println(Arrays.toString(seqSecond));
-
-		// var pair = discardCrossExclusives(Arrays.asList(seqFirst),
-		// Arrays.asList(seqSecond));
-		// System.out.println(pair.left().toString());
-		// System.out.println(pair.right().toString());
-
-		// List<String> shorter = pair.left().size() < pair.right().size() ? pair.left()
-		// : pair.right();
-		// TopLevelSubsequensesGenerator<String> gen = new
-		// TopLevelSubsequensesGenerator<String>(shorter);
-		// List<String> subSeq;
-		// while ((subSeq = gen.getNext()) != null) {
-		// System.out.println(subSeq.toString());
-		// }
-
-		List<List<String>> lcsList = ListUtils.findLongestCommonSubsequences(
-				Arrays.asList(seqFirst),
-				Arrays.asList(seqSecond));
-
-		for (List<String> list : lcsList) {
-			System.out.println(list.toString());
-		}
-
-		// var first = Arrays.asList("abgcjdekf".split(""));
-		// var second = Arrays.asList("156abcdfk5314".split(""));
-
-		generateIndices(6, 3);
-		System.out.println("==============");
-		var sample = Arrays.asList("012345".split(""));
-		var gen = new FastSubsequensesGenerator<String>(sample, 3);
-		List<String> ss;
-		while ((ss = gen.getNext()) != null) {
-			System.out.println(ss.toString());
-		}
+		} while (Console.askYesNo(scanner, "\nЖелаете повторить (Y/n)? ", true));
 	}
 }
