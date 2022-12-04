@@ -22,7 +22,7 @@ public class TaskMergeSort {
 		System.out.println("\nСгенерированный массив:\n");
 		Console.printArray(OUTPUT_STYLE, array);
 
-		ArrayUtils.mergeSort(array);
+		ArrayUtils.mergeSortBuffered(array);
 
 		System.out.println("\nРезультат сортировки:\n");
 		Console.printArray(OUTPUT_STYLE, array);
