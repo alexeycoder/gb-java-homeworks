@@ -38,4 +38,5 @@
 
 ## Результат работы программы
 
+![example](https://user-images.githubusercontent.com/109767480/205595336-365f8564-8cac-493f-9e38-f1f2d20ab9bc.png)
 
