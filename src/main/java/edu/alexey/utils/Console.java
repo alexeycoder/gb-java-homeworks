@@ -255,6 +255,10 @@ public class Console {
 	}
 
 	public static String styleText(TextStyle style, boolean resetAtEnd, String text) {
+		if (style == null) {
+			return text;
+		}
+
 		boolean any = false;
 		StringBuilder sb = new StringBuilder();
 		if (style.bold != null && style.bold) {

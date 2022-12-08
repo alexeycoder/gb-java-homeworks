@@ -23,9 +23,17 @@ public enum EscapeCode {
 	FG_BRIGHT_BLUE(EscapeCode.csi + "94m"),
 	FG_BRIGHT_MAGENTA(EscapeCode.csi + "95m"),
 	FG_BRIGHT_CYAN(EscapeCode.csi + "96m"),
-	FG_BRIGHT_WHITE(EscapeCode.csi + "97m");
+	FG_BRIGHT_WHITE(EscapeCode.csi + "97m"),
 
-	private String code;
+	BG_BRIGHT_RED(EscapeCode.csi + "101m"),
+	BG_BRIGHT_GREEN(EscapeCode.csi + "102m"),
+	BG_BRIGHT_YELLOW(EscapeCode.csi + "103m"),
+	BG_BRIGHT_BLUE(EscapeCode.csi + "104m"),
+	BG_BRIGHT_MAGENTA(EscapeCode.csi + "105m"),
+	BG_BRIGHT_CYAN(EscapeCode.csi + "106m"),
+	BG_BRIGHT_WHITE(EscapeCode.csi + "107m");
+
+	private final String code;
 	private static final String csi = "\u001b[";
 
 	private EscapeCode(String code) {
