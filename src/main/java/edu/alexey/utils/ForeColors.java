@@ -20,7 +20,7 @@ public enum ForeColors implements Colors {
 	BRIGHT_CYAN(EscapeCode.FG_BRIGHT_CYAN.getCode()),
 	BRIGHT_WHITE(EscapeCode.FG_BRIGHT_WHITE.getCode());
 
-	private String colorCode;
+	private final String colorCode;
 
 	private ForeColors(String colorCode) {
 		this.colorCode = colorCode;
