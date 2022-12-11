@@ -9,3 +9,5 @@
 [Домашнее задание №4](https://github.com/alexeycoder/gb-java-homeworks/tree/main/src/main/java/edu/alexey/homework4)
 
 [Домашнее задание №5](https://github.com/alexeycoder/gb-java-homeworks/tree/main/src/main/java/edu/alexey/homework5)
+
+[Домашнее задание №6](https://github.com/alexeycoder/gb-java-homeworks/tree/main/src/main/java/edu/alexey/homework6)
