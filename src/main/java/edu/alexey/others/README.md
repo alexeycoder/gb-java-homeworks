@@ -27,4 +27,12 @@
 10	5	22	17	12
 23	16	11	6	21
 ```
+### Пример работы приложения:
 
+![knightsturns-example-1](https://user-images.githubusercontent.com/109767480/206934426-0ef979a8-fdc3-4bd9-8e82-1186652bed1c.png)
+
+![knightsturns-example-2](https://user-images.githubusercontent.com/109767480/206934428-f32b499f-b502-42e4-84f1-f2ad1a7189b4.png)
+
+![knightsturns-example-3](https://user-images.githubusercontent.com/109767480/206934435-b99468fd-92e5-41b1-9847-b9a4c2bd68f3.png)
+
+![knightsturns-example-4](https://user-images.githubusercontent.com/109767480/206934438-6fe9e680-a7dd-4096-8626-a2473c8bd8ff.png)
