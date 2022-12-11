@@ -12,4 +12,4 @@
 
 [Домашнее задание №6](https://github.com/alexeycoder/gb-java-homeworks/tree/main/src/main/java/edu/alexey/homework6)
 
-[Прочие задачи](https://github.com/alexeycoder/gb-java-homeworks/tree/main/src/main/java/edu/alexey/homework6)
+[Прочие задачи](https://github.com/alexeycoder/gb-java-homeworks/tree/main/src/main/java/edu/alexey/others)
