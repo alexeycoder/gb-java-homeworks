@@ -1,6 +1,6 @@
 # Прочие задачи
 
-## Задача [restoreexpression](src/main/java/edu/alexey/others/restoreexpression)
+## Задача [restoreexpression](restoreexpression)
 
 Задано уравнение вида q + w = e, q, w, e >= 0.
 Некоторые цифры могут быть заменены знаком вопроса, например 2? + ?5 = 69.
